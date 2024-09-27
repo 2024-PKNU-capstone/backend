@@ -13,12 +13,12 @@ BloomBackend Team
 
 include::{snippets}/api-auth-test/register-user/http-request.adoc[]
 
-=== path parameter
+==== path parameter
 include::{snippets}/api-auth-test/register-user/path-parameters.adoc[]
 
 ==== request body
 
-include::{snippets}/api-auth-test/register-user/request-body.adoc[]
+include::{snippets}/api-auth-test/register-user/request-fields.adoc[]
 
 ==== HTTP response
 
