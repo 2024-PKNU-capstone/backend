@@ -1,4 +1,4 @@
-package com.example.jangboo.auth.domain;
+package com.example.jangboo.auth.domain.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

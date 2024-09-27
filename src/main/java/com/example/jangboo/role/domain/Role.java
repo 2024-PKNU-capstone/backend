@@ -2,6 +2,8 @@ package com.example.jangboo.role.domain;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Role {
 	@Column(name="student_id")
 	private Long studentId;
 
+	@CreationTimestamp
 	@Column(name="start_date")
 	private LocalDate startDate;
 

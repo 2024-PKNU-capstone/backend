@@ -8,7 +8,7 @@ spring:
     password: jiwon1923
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         SQL: debug

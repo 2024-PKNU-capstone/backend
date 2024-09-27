@@ -1,4 +1,4 @@
-package com.example.jangboo.auth.service;
+package com.example.jangboo.auth.domain.user;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.jangboo.auth.domain.CustomUserDetails;
 import com.example.jangboo.role.domain.Role;
 import com.example.jangboo.role.domain.RoleRepository;
 import com.example.jangboo.users.domain.User;

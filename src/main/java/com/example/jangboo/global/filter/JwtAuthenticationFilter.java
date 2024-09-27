@@ -1,20 +1,17 @@
 package com.example.jangboo.global.filter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.jangboo.auth.JwtTokenProvider;
 import com.example.jangboo.auth.controller.dto.Info.CurrentUserInfo;
-import com.example.jangboo.auth.domain.CustomUserDetails;
-import com.example.jangboo.auth.service.CustomUserDetailsService;
+import com.example.jangboo.auth.domain.user.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

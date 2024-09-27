@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 import com.example.jangboo.auth.controller.dto.Info.CurrentUserInfo;
 import com.example.jangboo.auth.controller.dto.response.JwtToken;
-import com.example.jangboo.auth.domain.CustomUserDetails;
+import com.example.jangboo.auth.domain.user.CustomUserDetails;
 
 @Component
 public class JwtTokenProvider {
@@ -37,7 +37,7 @@ public class JwtTokenProvider {
 	@Value("${jwt.refresh_token.valid_time}")
 	private Long refreshTokenValidTime;
 
-	public JwtToken generateTokenDto(CustomUserDetails customUserDetails) {
+	public JwtToken generateToken(CustomUserDetails customUserDetails) {
 		String accessToken = generateAccessToken(customUserDetails);
 		String refreshToken = generateRefreshToken(customUserDetails);
 		return new JwtToken(BEARER_TYPE,accessToken,refreshToken);
