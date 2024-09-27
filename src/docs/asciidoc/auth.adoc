@@ -1,0 +1,43 @@
+= API 문서
+BloomBackend Team
+2024-08-27
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+:sectlinks:
+
+== 권한 관련 API
+=== 1. 회원가입
+
+==== HTTP request
+
+include::{snippets}/api-auth-test/register-user/http-request.adoc[]
+
+=== path parameter
+include::{snippets}/api-auth-test/register-user/path-parameters.adoc[]
+
+==== request body
+
+include::{snippets}/api-auth-test/register-user/request-body.adoc[]
+
+==== HTTP response
+
+include::{snippets}/api-auth-test/register-user/http-response.adoc[]
+
+=== 2. 로그인
+
+==== HTTP request
+
+include::{snippets}/api-auth-test/login-user/http-request.adoc[]
+
+==== request body
+
+include::{snippets}/api-auth-test/login-user/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/api-auth-test/login-user/http-response.adoc[]
+
+==== response body
+
+include::{snippets}/api-auth-test/login-user/response-fields.adoc[]

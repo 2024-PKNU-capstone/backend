@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.3'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.asciidoctor.jvm.convert' version "3.3.2"
 }
 
 group = 'com.example'
@@ -14,9 +15,7 @@ java {
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+	asciidoctorExtensions
 }
 
 repositories {
@@ -31,6 +30,10 @@ dependencies {
 
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	//SPRING_REST_DOCS
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
 	//JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -48,6 +51,43 @@ dependencies {
 
 	//JSONObject
 	implementation 'org.json:json:20230227'
+}
+
+ext {
+	snippetsDir = file('./build/generated-snippets')
+}
+
+test {
+	useJUnitPlatform()
+	outputs.dir snippetsDir
+}
+
+asciidoctor.doFirst {
+	delete file("src/main/resources/static/docs")
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+	configurations 'asciidoctorExtensions'
+}
+
+bootJar {
+	dependsOn asciidoctor
+	copy {
+		from("${asciidoctor.outputDir}")
+		into 'src/main/resources/static/docs'
+	}
+}
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("$build/docs/asciidoc")
+	into file("src/main/resources/static/docs")
+}
+
+build {
+	dependsOn copyDocument
 }
 
 tasks.named('test') {

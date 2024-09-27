@@ -25,7 +25,7 @@ public class AuthController {
 	@PostMapping("/register/{role}")
 	public ResponseEntity<ResultDto<Void>> signup(
 		@RequestBody RegisterRequest request,
-		@PathVariable String role) {
+		@PathVariable("role") String role) {
 		return ResponseEntity.ok(ResultDto.of(200,"가입이 완료되었습니다", authService.registerUser(request,role)));
 	}
 
