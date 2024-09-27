@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -31,4 +32,10 @@ public class Role {
 
 	@Column(name="end_date")
 	private LocalDate endDate;
+
+	@Builder
+	public Role(RoleType role, Long studentId) {
+		this.role = role;
+		this.studentId = studentId;
+	}
 }
