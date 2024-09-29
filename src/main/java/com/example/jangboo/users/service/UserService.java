@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.jangboo.auth.controller.dto.request.RegisterRequest;
+import com.example.jangboo.univ.controller.dto.request.RegisterRequest;
 import com.example.jangboo.users.domain.User;
 import com.example.jangboo.users.domain.UserRepository;
 
@@ -22,12 +22,12 @@ public class UserService {
 	}
 
 	@Transactional
-	public Long registerUser(RegisterRequest request) {
+	public Long registerUser(RegisterRequest request,Long orgId) {
 		return userRepository.save(
 			User.builder()
 				.name(request.name())
 				.number(request.number())
-				.deptId(request.deptId())
+				.deptId(orgId)
 				.loginId(request.loginId())
 				.password(encodePassword(request.password()))
 				.build()
