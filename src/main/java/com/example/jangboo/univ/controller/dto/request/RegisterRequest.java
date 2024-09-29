@@ -2,7 +2,7 @@ package com.example.jangboo.univ.controller.dto.request;
 
 public record RegisterRequest(
 	String univ,
-	String colleage,
+	String college,
 	String dept,
 	String name,
 	String number,

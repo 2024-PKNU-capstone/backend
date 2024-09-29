@@ -1,0 +1,26 @@
+= API 문서
+JangbooBackend Team
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+:sectlinks:
+
+=== 1. 회원가입
+
+==== HTTP request
+
+include::{snippets}/api-univ-test/register-user/http-request.adoc[]
+
+==== path parameter
+include::{snippets}/api-univ-test/register-user/path-parameters.adoc[]
+
+==== query parameter
+include::{snippets}/api-univ-test/register-user/query-parameters.adoc[]
+
+==== request body
+
+include::{snippets}/api-univ-test/register-user/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/api-univ-test/register-user/http-response.adoc[]

@@ -35,8 +35,8 @@ public class UnivController {
 		return ResponseEntity.ok(ResultDto.of(200,"가입이 완료되었습니다", univService.registerUser(request,parentId,role)));
 	}
 
-	@GetMapping("/signup-link/{orgType}")
-	public ResponseEntity<ResultDto<String>> getUniv(
+	@GetMapping("/signup-link")
+	public ResponseEntity<ResultDto<String>> getUnivSignupLink(
 		@AuthenticationPrincipal CurrentUserInfo userInfo
 	){
 		return ResponseEntity.ok(ResultDto.of(

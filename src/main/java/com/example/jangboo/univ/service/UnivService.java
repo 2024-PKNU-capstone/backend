@@ -56,7 +56,7 @@ public class UnivService {
 	private Long registerOrg(RegisterRequest request, Long parentId) {
 		return Optional.ofNullable(parentId)
 			.map(id -> createUnivByType(request.dept(), id))
-			.orElseGet(() -> createUnivByType(request.colleage(), null));
+			.orElseGet(() -> createUnivByType(request.college(), null));
 	}
 
 	private void registerUser(RegisterRequest request, Long parentId, String role) {
@@ -77,7 +77,7 @@ public class UnivService {
 	}
 
 	private String determineOrgTypeByParentId(Optional<Univ> parent) {
-		return parent.isPresent() ? "DEPARTMENT" : "COLLEGE";
+		return parent.isPresent() ? "DEPARTURE" : "COLLEGE";
 	}
 
 	private Optional<Univ> findParent(Long parentId) {
@@ -90,6 +90,7 @@ public class UnivService {
 		switch (orgType){
 			case "DEPARTURE":
 				singupLink+=String.format(pageUrl + "/pages/signup.html?&deptId=%d&role=%s", deptId, "STUDENT");
+				break;
 			case "COLLEGE":
 				singupLink+= String.format(pageUrl + "/pages/signup.html?&collegeId=%d&role=%s", deptId, "PRESIDENT");
 				break;
