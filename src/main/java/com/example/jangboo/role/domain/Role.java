@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -23,6 +24,7 @@ public class Role {
 	@Column(name = "role_id")
 	private Long id;
 
+	@Getter
 	@Column(name="role")
 	private RoleType role;
 

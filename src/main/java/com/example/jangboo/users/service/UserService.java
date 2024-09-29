@@ -27,6 +27,7 @@ public class UserService {
 			User.builder()
 				.name(request.name())
 				.number(request.number())
+				.deptId(request.deptId())
 				.loginId(request.loginId())
 				.password(encodePassword(request.password()))
 				.build()
