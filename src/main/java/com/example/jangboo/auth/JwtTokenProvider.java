@@ -44,8 +44,9 @@ public class JwtTokenProvider {
 	}
 
 	public CurrentUserInfo extractUserInfo(String token) {
-		Long userId = Long.parseLong(extractClaim(token, Claims::getSubject));
+		Long userId = extractClaim(token, claims -> claims.get("userId", Long.class));
 		Long deptId = extractClaim(token, claims -> claims.get("deptId", Long.class));
+		System.out.println(userId.toString()+" "+deptId.toString());
 		return new CurrentUserInfo(userId, deptId);
 	}
 
@@ -55,16 +56,17 @@ public class JwtTokenProvider {
 	}
 
 	private Claims extractAllClaims(String token) {
-		return Jwts.parser()
-			.setSigningKey(encodedSecretKey)
+		return Jwts.parserBuilder()
+			.setSigningKey(getSecretKey())  // parserBuilder()로 일관성 유지
+			.build()
 			.parseClaimsJws(token)
 			.getBody();
 	}
 
 	public String generateAccessToken(CustomUserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
-
-		claims.put("deptId",userDetails.getDeptId());
+		claims.put("userId", Long.valueOf(userDetails.getUserId()));
+		claims.put("deptId", Long.valueOf(userDetails.getDeptId()));
 		return createToken(claims, userDetails.getUsername(),accessTokenValidTime);
 	}
 
@@ -73,13 +75,13 @@ public class JwtTokenProvider {
 		return createToken(claims, userDetails.getUsername(),refreshTokenValidTime);
 	}
 
-	public String createToken(Map<String, Object> claims, String userId, Long validTime) {
+	public String createToken(Map<String, Object> claims, String loginId, Long validTime) {
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validTime);
 
 		return Jwts.builder()
-			.setSubject(userId)
 			.setClaims(claims)
+			.setSubject(loginId)
 			.setIssuedAt(now)
 			.setExpiration(validity)
 			.signWith(getSecretKey(), SignatureAlgorithm.HS256)
@@ -87,8 +89,13 @@ public class JwtTokenProvider {
 	}
 
 	private Key getSecretKey() {
-		byte[] keyBytes = Base64.getDecoder().decode(encodedSecretKey);
-		return Keys.hmacShaKeyFor(keyBytes);
+		try {
+			byte[] keyBytes = Base64.getUrlDecoder().decode(encodedSecretKey); // Base64 URL로 디코딩
+			return Keys.hmacShaKeyFor(keyBytes);  // HMAC SHA 키 생성
+		} catch (IllegalArgumentException e) {
+			System.err.println("Invalid base64 encoded key: " + encodedSecretKey);
+			throw e; // 적절한 예외 처리
+		}
 	}
 
 	public boolean validateToken(String token) {
