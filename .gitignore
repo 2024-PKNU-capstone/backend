@@ -36,5 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### Security###
-/src/main/resources/application-secret.yml
+### Security ###
+src/main/resources/application-secret.yml
+src/main/resources/config/jwt.properties
