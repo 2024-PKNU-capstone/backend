@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.jangboo.auth.controller.dto.Info.CurrentUserInfo;
 import com.example.jangboo.role.domain.Role;
 
 import java.util.Collection;
@@ -26,6 +27,10 @@ public class CustomUserDetails implements UserDetails {
 		this.roles = roles;
 	}
 
+	public CurrentUserInfo getCurrentUser(){
+		return new CurrentUserInfo(userId,deptId);
+	}
+
 	public Long getDeptId() {
 		return deptId;
 	}
@@ -38,7 +43,7 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles.stream()
-			.map(role -> new SimpleGrantedAuthority(role.toString()))
+			.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().toString()))
 			.toList();  // 유저의 권한 목록을 반환
 	}
 
