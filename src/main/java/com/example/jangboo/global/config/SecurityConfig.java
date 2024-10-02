@@ -27,7 +27,8 @@ public class SecurityConfig{
 		http
 			.csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/auth/register/**","api/auth/login").permitAll()  // 로그인, 회원가입은 모두 허용
+				.requestMatchers("/api/univ/register/**","api/auth/login").permitAll()// 로그인, 회원가입은 모두 허용
+				.requestMatchers("/api/univ/signup-link").hasAnyRole("AUDITOR","PRESIDENT")
 				.anyRequest().authenticated()  // 그 외 모든 요청은 인증 필요
 			)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // 세션 사용 안 함

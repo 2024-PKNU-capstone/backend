@@ -30,6 +30,8 @@ dependencies {
 
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
 
 	//SPRING_REST_DOCS
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
