@@ -60,6 +60,7 @@ public class OpenBankingClient {
 
 		OpenBankingTokenResponse response = restTemplate.postForObject(url, request, OpenBankingTokenResponse.class);
 		assert response != null;
+		System.out.println(response.getAccessToken()+" "+response.getRefreshToken());
 		return new TokenInfo(response.getAccessToken(),response.getRefreshToken(),response.getUserSeqNo());
 	}
 
@@ -83,9 +84,9 @@ public class OpenBankingClient {
 		return new TokenInfo(response.getAccessToken(),response.getRefreshToken(),response.getUserSeqNo());
 	}
 
-	public String getAuthUrl() {
+	public String getAuthUrl(Long userId) {
 		return "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id="+
-			clientId+"&redirect_uri="+redirectUri+"&scope="+scope+"&state=12345678901234567890123456789012&auth_type=0";
+			clientId+"&redirect_uri="+redirectUri+"&scope="+scope+"&client_info="+userId+"&state=12345678901234567890123456789012&auth_type=0";
 
 	}
 }

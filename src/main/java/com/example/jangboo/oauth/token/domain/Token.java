@@ -21,11 +21,11 @@ public class Token {
 	private Long id;
 
 	@Getter
-	@Column(name = "access_token")
+	@Column(name = "access_token",length = 512)
 	private String accessToken;
 
 	@Getter
-	@Column(name = "refresh_token")
+	@Column(name = "refresh_token",length = 512)
 	private String refreshToken;
 
 	@Getter

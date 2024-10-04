@@ -20,12 +20,13 @@ public class TokenService {
 	}
 
 	@Transactional
-	public Void createTokenInfo(TokenInfo tokenInfo) throws Exception {
+	public Void createTokenInfo(TokenInfo tokenInfo,Long userId) throws Exception {
 		tokenRepository.save(
 			Token.builder()
 				.accessToken(getEncryptedToken(tokenInfo.accessToken()))
 				.refreshToken(getEncryptedToken(tokenInfo.refreshToken()))
 				.userSeqNo(tokenInfo.userSeqNo())
+				.ownerId(userId)
 				.build()
 		);
 		return null;

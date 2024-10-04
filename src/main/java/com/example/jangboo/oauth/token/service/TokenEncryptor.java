@@ -8,12 +8,21 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
+import jakarta.annotation.PostConstruct;
+
 @Component
 public class TokenEncryptor {
 	private static final String ALGORITHM = "AES";
 
 	@Value("${oauth.open-banking.key.token-secret}")
-	private static String KEY = "";  // 실제 프로젝트에서는 더 안전하게 관리해야 합니다.
+	private String key;
+
+	private static String KEY;
+
+	@PostConstruct
+	public void init() {
+		TokenEncryptor.KEY = this.key;
+	}
 
 	public static String encrypt(String token) throws Exception {
 		SecretKeySpec secretKey = new SecretKeySpec(KEY.getBytes(), ALGORITHM);

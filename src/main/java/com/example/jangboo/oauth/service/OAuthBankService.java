@@ -15,11 +15,11 @@ public class OAuthBankService {
 		this.tokenService = tokenService;
 	}
 
-	public String getAuthUrl(){
-		return client.getAuthUrl();
+	public String getAuthUrl(Long userId){
+		return client.getAuthUrl(userId);
 	}
 
-	public Void getAccessToken(String code) throws Exception {
-		return tokenService.createTokenInfo(client.requestAccessToken(code));
+	public Void getAccessToken(String code,Long userId) throws Exception {
+		return tokenService.createTokenInfo(client.requestAccessToken(code),userId);
 	}
 }
