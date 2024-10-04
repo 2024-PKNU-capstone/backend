@@ -24,8 +24,8 @@ public class OAuthBankController {
 	}
 
 	@GetMapping("/open-bank")
-	public String redirectToOpenBank(@AuthenticationPrincipal CurrentUserInfo userInfo) {
-		return oAuthBankService.getAuthUrl(userInfo.userId());
+	public RedirectView redirectToOpenBank(@AuthenticationPrincipal CurrentUserInfo userInfo) {
+		return new RedirectView(oAuthBankService.getAuthUrl(userInfo.userId()));
 	}
 
 	@GetMapping("/token")
