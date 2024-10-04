@@ -10,7 +10,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.jangboo.oauth.token.OpenBankingToken;
+import com.example.jangboo.oauth.controller.dto.response.OpenBankingTokenResponse;
+import com.example.jangboo.oauth.token.dto.TokenInfo;
 
 @Component
 public class OpenBankingClient {
@@ -28,6 +29,9 @@ public class OpenBankingClient {
 	@Value("${oauth.open-banking.uri.redirect-uri}")
 	private String redirectUri;
 
+	@Value("${oauth.open-banking.uri.user_info-uri}")
+	private String userInfoUri;
+
 	private final RestTemplate restTemplate;
 
 	@Autowired
@@ -35,7 +39,7 @@ public class OpenBankingClient {
 		this.restTemplate = restTemplate;
 	}
 
-	public String requestAccessToken(String authorizationCode) {
+	public TokenInfo requestAccessToken(String authorizationCode) {
 		String url = tokenUrl;
 
 		HttpHeaders headers = new HttpHeaders();
@@ -50,9 +54,9 @@ public class OpenBankingClient {
 
 		HttpEntity<?> request = new HttpEntity<>(body, headers);
 
-		OpenBankingToken response = restTemplate.postForObject(url, request, OpenBankingToken.class);
+		OpenBankingTokenResponse response = restTemplate.postForObject(url, request, OpenBankingTokenResponse.class);
 		assert response != null;
-		return response.getAccessToken();
+		return new TokenInfo(response.getAccessToken(),response.getRefreshToken(),response.getUserSeqNo());
 	}
 
 	public String getAuthUrl() {
@@ -60,4 +64,3 @@ public class OpenBankingClient {
 			clientId+"&redirect_uri="+redirectUri+"&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0";
 	}
 }
-
