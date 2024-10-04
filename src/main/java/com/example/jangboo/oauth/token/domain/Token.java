@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -19,19 +20,31 @@ public class Token {
 	@Column(name = "token_id")
 	private Long id;
 
+	@Getter
 	@Column(name = "access_token")
 	private String accessToken;
 
+	@Getter
 	@Column(name = "refresh_token")
 	private String refreshToken;
 
+	@Getter
 	@Column(name = "user_seq_no")
 	private String userSeqNo;
 
+	@Column(name ="owner_id")
+	private Long ownerId;
+
 	@Builder
-	public Token(String accessToken, String refreshToken, String userSeqNo) {
+	public Token(String accessToken, String refreshToken, String userSeqNo, Long ownerId) {
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 		this.userSeqNo = userSeqNo;
+		this.ownerId = ownerId;
+	}
+
+	public void refresh(String accessToken,String refreshToken){
+		this.accessToken = accessToken;
+		this.refreshToken = refreshToken;
 	}
 }

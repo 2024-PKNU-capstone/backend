@@ -15,7 +15,8 @@ import com.example.jangboo.oauth.token.dto.TokenInfo;
 
 @Component
 public class OpenBankingClient {
-	private static final String GRANT_TYPE = "authorization_code";
+	private static final String AUTH_GRANT_TYPE = "authorization_code";
+	private static final String REFRESH_GRANT_TYPE = "refresh_token";
 
 	@Value("${oauth.open-banking.uri.token-uri}")
 	private String tokenUrl;
@@ -28,6 +29,9 @@ public class OpenBankingClient {
 
 	@Value("${oauth.open-banking.uri.redirect-uri}")
 	private String redirectUri;
+
+	@Value("${oauth.open-banking.scope}")
+	private String scope;
 
 	@Value("${oauth.open-banking.uri.user_info-uri}")
 	private String userInfoUri;
@@ -47,7 +51,7 @@ public class OpenBankingClient {
 
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("code", authorizationCode);
-		body.add("grant_type", GRANT_TYPE);
+		body.add("grant_type", AUTH_GRANT_TYPE);
 		body.add("client_id", clientId);
 		body.add("client_secret", clientSecret);
 		body.add("redirect_uri", redirectUri);
@@ -59,8 +63,29 @@ public class OpenBankingClient {
 		return new TokenInfo(response.getAccessToken(),response.getRefreshToken(),response.getUserSeqNo());
 	}
 
+	public TokenInfo refreshAccessToken(String refreshToken) {
+		String url = tokenUrl;
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add("client_id", clientId);
+		body.add("client_secret", clientSecret);
+		body.add("refresh_token", refreshToken);
+		body.add("grant_type", REFRESH_GRANT_TYPE);
+		body.add("scope", scope);
+
+		HttpEntity<?> request = new HttpEntity<>(body, headers);
+
+		OpenBankingTokenResponse response = restTemplate.postForObject(url, request, OpenBankingTokenResponse.class);
+		assert response != null;
+		return new TokenInfo(response.getAccessToken(),response.getRefreshToken(),response.getUserSeqNo());
+	}
+
 	public String getAuthUrl() {
 		return "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id="+
-			clientId+"&redirect_uri="+redirectUri+"&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0";
+			clientId+"&redirect_uri="+redirectUri+"&scope="+scope+"&state=12345678901234567890123456789012&auth_type=0";
+
 	}
 }

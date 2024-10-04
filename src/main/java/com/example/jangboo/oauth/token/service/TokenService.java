@@ -38,4 +38,15 @@ public class TokenService {
 	private String getDecryptedToken(String token) throws Exception {
 		return tokenEncryptor.decrypt(token);
 	}
+
+	public TokenInfo getTokenInfoByUserId(Long userId) {
+		Token token = tokenRepository.findByOwnerId(userId);
+		return new TokenInfo(token.getAccessToken(),token.getRefreshToken(),token.getUserSeqNo());
+	}
+
+	@Transactional
+	public void refreshTokens(Long userId, TokenInfo tokenInfo) {
+		Token token = tokenRepository.findByOwnerId(userId);
+		token.refresh(tokenInfo.accessToken(),tokenInfo.refreshToken());
+	}
 }
