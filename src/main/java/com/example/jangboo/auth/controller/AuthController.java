@@ -14,7 +14,7 @@ import com.example.jangboo.global.dto.ResultDto;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://localhost:5500")
 public class AuthController {
 	private final AuthService authService;
 
@@ -28,4 +28,6 @@ public class AuthController {
 	) throws Exception {
 		return ResponseEntity.ok(ResultDto.of(200,"로그인 성공",authService.getAuthentication(request)));
 	}
+
+
 }
