@@ -16,6 +16,9 @@ public class File {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "file_name")
+    private String name;
+
     @Column(name = "dept_id")
     private Long deptId;
 
@@ -33,7 +36,8 @@ public class File {
 
 
     @Builder
-    public File(Long deptId, String fileUrl, FileType fileType, FileStatus fileStatus) {
+    public File(String name, Long deptId, String fileUrl, FileType fileType, FileStatus fileStatus) {
+        this.name = name;
         this.deptId = deptId;
         this.fileUrl = fileUrl;
         this.fileType = fileType;

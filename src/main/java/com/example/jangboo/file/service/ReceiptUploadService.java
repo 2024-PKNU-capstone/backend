@@ -42,7 +42,7 @@ public class ReceiptUploadService {
                 String fileUrl = s3Service.uploadFile(file,"receipt");
 
                 // 파일정보 저장
-                fileRepository.save(new File(userInfo.deptId(),fileUrl,FileType.RECEIPT, FileStatus.UPLOADED));
+                fileRepository.save(new File(fileName, userInfo.deptId(),fileUrl,FileType.RECEIPT, FileStatus.UPLOADED));
 
                 // 업로드 결과 추가
                 fileUploadResults.add(new FileUploadResult(FileType.RECEIPT, fileName,true, fileUrl));
