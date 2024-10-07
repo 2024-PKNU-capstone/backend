@@ -25,7 +25,6 @@ public class SecurityConfig{
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.cors(cors->cors.disable())
 			.csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/api/univ/register/**","api/auth/login","/api/oauth/**").permitAll()// 로그인, 회원가입은 모두 허용
