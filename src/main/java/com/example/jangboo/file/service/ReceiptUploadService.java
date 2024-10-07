@@ -7,6 +7,7 @@ import com.example.jangboo.file.domain.File;
 import com.example.jangboo.file.domain.FileRepository;
 import com.example.jangboo.file.domain.FileStatus;
 import com.example.jangboo.file.domain.FileType;
+import com.example.jangboo.infra.aws.S3FileStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,12 +18,12 @@ import java.util.Optional;
 
 @Service
 public class ReceiptUploadService {
-    private final S3Service s3Service;
+    private final FileStorageService fileStorageService;
     private final FileRepository fileRepository;
 
-    public ReceiptUploadService(FileRepository fileRepository, S3Service s3Service) {
+    public ReceiptUploadService(FileRepository fileRepository, FileStorageService fileStorageService) {
         this.fileRepository = fileRepository;
-        this.s3Service = s3Service;
+        this.fileStorageService = fileStorageService;
     }
 
     @Transactional
@@ -39,7 +40,7 @@ public class ReceiptUploadService {
             try {
                 validateFile(file, FileType.RECEIPT);
                 // s3에 파일 업로드
-                String fileUrl = s3Service.uploadFile(file,"receipt");
+                String fileUrl = fileStorageService.uploadFile(file,"receipt");
 
                 // 파일정보 저장
                 fileRepository.save(new File(fileName, userInfo.deptId(),fileUrl,FileType.RECEIPT, FileStatus.UPLOADED));
