@@ -10,6 +10,7 @@ services:
       jangboo:
         aliases:
           - "zookeeper"
+
   kafka:
     image: wurstmeister/kafka
     container_name: jangboo_kafka
@@ -20,7 +21,14 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: receipt_ocr_request:1:1, receipt_ocr_result:1:1
+      # EventCode에 따라 생성할 토픽들 추가
+      KAFKA_CREATE_TOPICS: |
+        ocr_start:1:1,
+        ocr_end:1:1,
+        ocr_fail:1:1,
+        receipt_create:1:1,
+        transaction_match_success:1:1,
+        transaction_match_fail:1:1
       KAFKA_LISTENERS: LISTENER_BOB://kafka:29092,LISTENER_FRED://kafka:9092
       KAFKA_ADVERTISED_LISTENERS: LISTENER_BOB://kafka:29092,LISTENER_FRED://kafka:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_BOB:PLAINTEXT,LISTENER_FRED:PLAINTEXT
