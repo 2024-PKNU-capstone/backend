@@ -45,6 +45,9 @@ public class File {
         this.uploadedAt = LocalDateTime.now();
     }
 
+    public void updateStatus(FileStatus fileStatus) {
+        this.fileStatus = fileStatus;
+    }
 
 
 
