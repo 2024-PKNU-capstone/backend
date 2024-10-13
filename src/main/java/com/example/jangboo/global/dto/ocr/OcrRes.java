@@ -16,16 +16,4 @@ public class OcrRes {
         private Long fileId;
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class OcrEndResponse{
-        private Long fileId;
-        private OcrResponse ocrResponse;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class OcrResponse {}
 }
